@@ -26,7 +26,7 @@ class Docker implements Serializable {
         script.sh "docker push 64.226.110.153:8083/$imageName"
     }
 
-    def buildDockerImageECR(String credentialsId, String imageName, String ipWithPort) {
+    def buildDockerImageECR(String credentialsKey, String imageName, String ipWithPort) {
         script.withCredentials([script.aws(credentialsId: credentialsKey)]){
             script.sh "docker build -t $ipWithPort/$imageName ."
             script.sh "aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ipWithPort"
